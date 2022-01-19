@@ -33,7 +33,6 @@
   "dependencies": {
     "@ceramicnetwork/common": "^2.0.0-alpha.2",
     "@ceramicnetwork/stream-tile": "^2.0.0-alpha.2",
-    "ceramic-cacao": "^0.0.11",
     "fast-json-patch": "^3.1.0",
     "lodash.clonedeep": "^4.5.0",
     "multiformats": "^9.5.8",
@@ -44,6 +43,7 @@
     "@ipld/dag-cbor": "^7.0.0",
     "@stablelib/sha256": "^1.0.1",
     "@types/lodash.clonedeep": "^4.5.6",
+    "ceramic-cacao": "^0.0.11",
     "did-resolver": "^3.1.5",
     "dids": "^3.0.0-alpha.4",
     "key-did-resolver": "^2.0.0-alpha.2"
