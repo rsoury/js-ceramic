@@ -23,7 +23,7 @@ import lru from 'lru_map'
 import { PubsubKeepalive } from './pubsub/pubsub-keepalive.js'
 import { PubsubRateLimit } from './pubsub/pubsub-ratelimit.js'
 import { TaskQueue } from './pubsub/task-queue.js'
-import { base64urlToJSON } from './utils.js'
+import { base64urlToJSON, Utils } from './utils.js'
 
 const IPFS_GET_RETRIES = 3
 const DEFAULT_IPFS_GET_TIMEOUT = 30000 // 30 seconds per retry, 3 retries = 90 seconds total timeout
@@ -99,16 +99,8 @@ export class Dispatcher {
         if (cacaoBlock) {
           const decodedProtectedHeader = base64urlToJSON(data.jws.signatures[0].protected)
           const capIPFSUri = decodedProtectedHeader.cap
-          const capCID = CID.parse(capIPFSUri.replace('ipfs://', ''))
-          const capFormat = await this._ipfs.codecs.getCodec(capCID.code).then((f) => f.name)
-          const capMhType = await this._ipfs.hashers
-            .getHasher(capCID.multihash.code)
-            .then((mh) => mh.name)
-          await this._ipfs.block.put(cacaoBlock, {
-            format: capFormat,
-            mhtype: capMhType,
-            version: capCID.version,
-          })
+          const putOptions = await Utils.getIPFSBlockPutOptionsFromCID(capIPFSUri, this._ipfs)
+          await this._ipfs.block.put(cacaoBlock, putOptions)
         }
 
         // put the JWS into the ipfs dag
@@ -119,16 +111,8 @@ export class Dispatcher {
         })
         // put the payload into the ipfs dag
         const linkCid = jws.link
-        const format = await this._ipfs.codecs.getCodec(linkCid.code).then((f) => f.name)
-        const mhtype = await this._ipfs.hashers
-          .getHasher(linkCid.multihash.code)
-          .then((mh) => mh.name)
-        await this._ipfs.block.put(linkedBlock, {
-          format,
-          mhtype,
-          version: linkCid.version,
-          signal: this._shutdownSignal,
-        })
+        const putOptions = await Utils.getIPFSBlockPutOptionsFromCID(linkCid, this._ipfs)
+        await this._ipfs.block.put(linkedBlock, putOptions)
         await this._restrictCommitSize(jws.link.toString())
         await this._restrictCommitSize(cid)
         return cid
