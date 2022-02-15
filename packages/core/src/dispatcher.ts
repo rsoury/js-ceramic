@@ -99,7 +99,7 @@ export class Dispatcher {
         if (cacaoBlock) {
           const decodedProtectedHeader = base64urlToJSON(data.jws.signatures[0].protected)
           const capIPFSUri = decodedProtectedHeader.cap
-          await Utils.putIPFSBlock(capIPFSUri, cacaoBlock, this._ipfs)
+          await Utils.putIPFSBlock(capIPFSUri, cacaoBlock, this._ipfs, this._shutdownSignal)
         }
 
         // put the JWS into the ipfs dag
@@ -110,7 +110,7 @@ export class Dispatcher {
         })
         // put the payload into the ipfs dag
         const linkCid = jws.link
-        await Utils.putIPFSBlock(linkCid, linkedBlock, this._ipfs)
+        await Utils.putIPFSBlock(linkCid, linkedBlock, this._ipfs, this._shutdownSignal)
         await this._restrictCommitSize(jws.link.toString())
         await this._restrictCommitSize(cid)
         return cid
