@@ -177,4 +177,4 @@ test('fails to verify capability with invalid resource', async () => {
   ).rejects.toThrowError(
     'Capability does not have appropriate permissions to update this TileDocument'
   )
-})
+}, 10000)
