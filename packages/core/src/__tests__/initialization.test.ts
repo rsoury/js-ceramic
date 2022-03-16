@@ -1,10 +1,12 @@
 import { jest } from '@jest/globals'
 import { Ceramic } from '../ceramic.js'
 import tmp from 'tmp-promise'
-import { IpfsApi } from '@ceramicnetwork/common'
+import { IpfsApi, polyfillAbortController } from '@ceramicnetwork/common'
 import { createIPFS } from '@ceramicnetwork/ipfs-daemon'
 import { InMemoryAnchorService } from '../anchor/memory/in-memory-anchor-service.js'
 import { delay } from './delay.js'
+
+polyfillAbortController()
 
 describe('Ceramic integration', () => {
   jest.setTimeout(60000)
@@ -19,6 +21,7 @@ describe('Ceramic integration', () => {
   })
 
   it('can create Ceramic instance on default network', async () => {
+    polyfillAbortController()
     const stateStoreDirectory = await tmp.tmpName()
     const ceramic = await Ceramic.create(ipfs1, { stateStoreDirectory })
     await delay(1000)

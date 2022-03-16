@@ -18,6 +18,7 @@ export * from './unreachable-case-error.js'
 export * from './running-state-like.js'
 export * from './stream-state-subject.js'
 export * from './subscription-set.js'
+export * from './utils/polyfill-abort-controller.js'
 
 import type { IPFS } from 'ipfs-core-types'
 export type IpfsApi = IPFS

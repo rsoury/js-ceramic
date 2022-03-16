@@ -15,7 +15,9 @@ import * as u8a from 'uint8arrays'
 import { StreamID, CommitID } from '@ceramicnetwork/streamid'
 import { CID } from 'multiformats/cid'
 import { errorRepresentation, withResolutionError } from './error-representation.js'
-import { CommitType } from '@ceramicnetwork/common'
+import { CommitType, polyfillAbortController } from '@ceramicnetwork/common'
+
+polyfillAbortController()
 
 const DID_LD_JSON = 'application/did+ld+json'
 const DID_JSON = 'application/did+json'
