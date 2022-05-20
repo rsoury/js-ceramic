@@ -3,12 +3,10 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - pwd
       - curl -L https://dl.dagger.io/dagger/install.sh | sh
-      - ls
       - ./bin/dagger version
   build:
     commands:
       - ./bin/dagger project init
-      - ./bin/dagger project update
-      - ./bin/dagger do build
+      - ./bin/dagger project update github.com/smrz2001/pipelinetools@main
+      - ./bin/dagger do push -p cue.mod/pkg/github.com/smrz2001/pipelinetools/ceramic/ci.cue
