@@ -215,15 +215,15 @@ export class CeramicDaemon {
     )
 
     const [modules, params] = Ceramic._processConfig(ipfs, ceramicConfig)
-    modules.loggerProvider
-      .getDiagnosticsLogger()
-      .imp(
-        `Starting Ceramic Daemon at version ${packageJson.version} with config: \n${JSON.stringify(
-          opts,
-          null,
-          2
-        )}`
-      )
+    // modules.loggerProvider
+    //   .getDiagnosticsLogger()
+    //   .imp(
+    //     `Starting Ceramic Daemon at version ${packageJson.version} with config: \n${JSON.stringify(
+    //       opts,
+    //       null,
+    //       2
+    //     )}`
+    //   )
 
     if (opts.stateStore?.mode == StateStoreMode.S3) {
       const s3StateStore = new S3StateStore(opts.stateStore?.s3Bucket)

@@ -132,6 +132,22 @@ export class CeramicCliUtils {
       if (port) {
         config.httpApi.port = port
       }
+      // desCopy(config.httpApi.port)
+
+
+      // {
+      //     deserializer: (inPort) => {
+      //       console.log('0.deserializer', inPort, typeof inPort)
+      //       const validPort = Number(inPort)
+      //       if (inPort == undefined || inPort == null) {
+      //         return inPort
+      //       } else if (isNaN(validPort) || validPort > 65535) {
+      //         console.error('Invalid port number passed.')
+      //         process.exit(1)
+      //       }
+      //       return validPort
+      //     },
+      //   }
       if (ipfsApi) {
         config.ipfs.mode = IpfsMode.REMOTE
         config.ipfs.host = ipfsApi
