@@ -5,12 +5,12 @@ phases:
     commands:
       - curl -L https://dl.dagger.io/dagger/install.sh | sh
       - ./bin/dagger version
-  build:
-    commands:
       - ./bin/dagger project init
       - ./bin/dagger project update
       - ./bin/dagger project update github.com/3box/pipelinetools@main
-      - git_meta=$(./bin/dagger do -l error --output-format json git -p cue.mod/pkg/github.com/3box/pipelinetools/ceramic/ci.cue)
+  build:
+    commands:
+      - git_meta=$(./bin/dagger do -l debug --output-format json git -p cue.mod/pkg/github.com/3box/pipelinetools/ceramic/ci.cue)
       - sha=$(echo "${git_meta}" | jq -r '.sha')
       - fullSha=$(echo "${git_meta}" | jq -r '.fullSha')
       - branch=$(echo "${git_meta}" | jq -r '.branch')
