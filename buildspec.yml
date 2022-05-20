@@ -8,5 +8,11 @@ phases:
   build:
     commands:
       - ./bin/dagger project init
-      - ./bin/dagger project update github.com/smrz2001/pipelinetools@main
-      - ./bin/dagger do push -p cue.mod/pkg/github.com/smrz2001/pipelinetools/ceramic/ci.cue
+      - ./bin/dagger project update
+      - ./bin/dagger project update github.com/3box/pipelinetools@main
+      - git_meta=$(./bin/dagger do -l error --output-format json git -p cue.mod/pkg/github.com/3box/pipelinetools/ceramic/ci.cue)
+      - sha=$(echo "${git_meta}" | jq -r '.sha')
+      - fullSha=$(echo "${git_meta}" | jq -r '.fullSha')
+      - branch=$(echo "${git_meta}" | jq -r '.branch')
+      - ./bin/dagger do -l info --output-format json test -p cue.mod/pkg/github.com/3box/pipelinetools/ceramic/ci.cue
+      - ./bin/dagger do -l error push -w "actions:push:tags:[\"$fullSha\",\"$sha\",\"$branch\"]" -p cue.mod/pkg/github.com/3box/pipelinetools/ceramic/ci.cue
