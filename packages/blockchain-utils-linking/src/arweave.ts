@@ -15,7 +15,7 @@ export class ArweaveAuthProvider implements AuthProvider {
   constructor(private readonly provider: any, private readonly address: string) {}
 
   async accountId(): Promise<AccountId> {
-    const chainId = `ar:1`
+    const chainId = `arweave:1`
     return new AccountId({ address: this.address, chainId })
   }
 
