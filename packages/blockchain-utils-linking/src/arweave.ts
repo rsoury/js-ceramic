@@ -1,9 +1,5 @@
-import {
-  AuthProvider,
-  asOldCaipString,
-  getConsentMessage,
-  LinkProof,
-} from '@ceramicnetwork/blockchain-utils-linking'
+import { AuthProvider } from './auth-provider.js'
+import { getConsentMessage, LinkProof, asOldCaipString } from './util.js'
 import { AccountId } from 'caip'
 import * as uint8arrays from 'uint8arrays'
 
